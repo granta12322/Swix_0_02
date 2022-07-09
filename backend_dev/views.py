@@ -39,11 +39,11 @@ class EventViewSet(viewsets.ModelViewSet):
         return Response(serializer.data)
     
     def perform_create(self,request):
-        serializer = EventSerializer(data = self.request.data, context = {'request': request})
+        serializer = EventSerializer(data = request.data, context = {'request': request})
         print("C")
         if serializer.is_valid():
             print("D")
-            serializer.save(organiser = self.request.user)
+            serializer.save()#organiser = self.request.user)
             print("E")
             return Response(status=200)
         return Response(Status=404)     # !!! Shouldn't be a status 404, should be something else
@@ -55,7 +55,7 @@ class VenueViewSet(viewsets.ModelViewSet):
     serializer_class = VenueSerializer
     
     def list(self,request):    
-        serializer = VenueSerializer(self.queryset,many = True)
+        serializer = VenueSerializer(self.queryset,many = True, context = {'request': request})
         return Response(serializer.data)
     
     def retrieve(self,request, pk):
@@ -63,6 +63,15 @@ class VenueViewSet(viewsets.ModelViewSet):
         serializer = VenueSerializer(venue,many = False, context = {'request': request})
         return Response(serializer.data)
     
-    def perform_create(self):
-        serializer = VenueSerializer(data = self.request.data)
-        serializer.save(organiser = self.request.user)
+    def perform_create(self, request):
+        print("There")
+        print(request)
+
+        serializer = VenueSerializer(data = request.data, context = {'request': request}).save()
+        print("Here")
+        if serializer.is_valid():
+            print("D")
+            serializer.save()
+            print("E")
+            return Response(status=200)
+        return Response(Status=404)     # !!! Shouldn't be a status 404, should be something else

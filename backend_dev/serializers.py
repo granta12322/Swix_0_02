@@ -10,9 +10,12 @@ class EventSerializer(serializers.HyperlinkedModelSerializer):
         fields = ['name','creation_date','start_datetime','venue']
 
 class VenueSerializer(serializers.HyperlinkedModelSerializer):
-    events = serializers.HyperlinkedRelatedField(view_name= 'event-list', many = True, read_only = True)
+    events = serializers.HyperlinkedRelatedField(view_name= 'event-detail', many = True, read_only = True)
 
     class Meta:
         model = Venue
-        fields = ['name','address']
+        fields = '__all__'
+        depth = 2
+
+
 

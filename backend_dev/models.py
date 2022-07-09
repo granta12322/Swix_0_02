@@ -4,7 +4,7 @@ from django.db import models
 
 class Event(models.Model):
     name = models.CharField(default = "My Fun Event", max_length= 100)
-    venue = models.ForeignKey(to = "Venue", on_delete= models.CASCADE,null = True)
+    venue = models.ForeignKey(to = "Venue", related_name= "events", on_delete= models.CASCADE,null = True)
     creation_date = models.DateField(auto_now_add = True)
     start_datetime = models.DateTimeField(null = False, default = "2022-12-07 12:00:00")
 
