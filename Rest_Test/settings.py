@@ -1,5 +1,5 @@
 """
-Django settings for {{ project_name }} project.
+Django settings for Rest_Test project.
 
 For more information on this file, see
 https://docs.djangoproject.com/en/{{ docs_version }}/topics/settings/
@@ -18,7 +18,7 @@ class Common(Configuration):
     BASE_DIR = Path(__file__).resolve().parent.parent
 
     # SECURITY WARNING: keep the secret key used in production secret!
-    SECRET_KEY = values.SecretValue()
+    SECRET_KEY = '1234' #values.SecretValue()
 
     # SECURITY WARNING: don't run with debug turned on in production!
     DEBUG = values.BooleanValue(False)
@@ -38,7 +38,11 @@ class Common(Configuration):
         'django_extensions',
         'debug_toolbar',
 
-        '{{ project_name }}.users',
+        'rest_framework',
+        
+        'backend_dev',
+
+        'Rest_Test.users'
     ]
 
     MIDDLEWARE = [
@@ -52,7 +56,7 @@ class Common(Configuration):
         'django.middleware.clickjacking.XFrameOptionsMiddleware',
     ]
 
-    ROOT_URLCONF = '{{ project_name }}.urls'
+    ROOT_URLCONF = 'Rest_Test.urls'
 
     TEMPLATES = [
         {
@@ -70,7 +74,7 @@ class Common(Configuration):
         },
     ]
 
-    WSGI_APPLICATION = '{{ project_name }}.wsgi.application'
+    WSGI_APPLICATION = 'Rest_Test.wsgi.application'
 
     # Database
     # https://docs.djangoproject.com/en/{{ docs_version }}/ref/settings/#databases
