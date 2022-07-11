@@ -5,7 +5,8 @@ from .views import EventViewSet, VenueViewSet
 
 router = DefaultRouter()
 router.register(r'events',views.EventViewSet)
-router.register(r'venues',views.VenueViewSet, basename = 'venue')
+router.register(r'venues',views.VenueViewSet)
+router.register(r'tickets',views.TicketViewSet)
 
 
 
