@@ -16,7 +16,25 @@ class Venue(models.Model):
 class Ticket(models.Model):
     owner = models.ForeignKey(to = "users.User", related_name = "tickets", on_delete = models.CASCADE, null = True) # !!! Cascade for now but if user deletes account then ticket should be returned to owner
     event = models.ForeignKey(to = "Event", related_name = "tickets", on_delete = models.CASCADE)
-    type = models.CharField(default = "Standard Entry", max_length = 100) # ! Needs changing to a foreignKey field
+    type = models.ForeignKey(to = "TicketType", on_delete = models.CASCADE) 
+    resale_price = models.FloatField(null = True)
+    is_for_sale = models.BooleanField(default = False)
+
+
+    def transfer__ownership(self,buyer):
+        self.owner = buyer
+
+class TransactionManager:
+
+    def check_on_sale(self, ticket):
+        return ticket.is_for_sale
+
+
+class Transaction(models.Model):
+    buyer = models.ForeignKey(to = "users.User",related_name = "transaction_sales", on_delete = models.SET_NULL) # !!! Transaction isn't deleted when 
+    seller = models.ForeignKey(to = "users.User",related_name = "transaction_purchases", on_delete = models.SET_NULL) # !!! Transaction isn't deleted when 
+    ticket = models.ForeignKey(to = "Ticket", on_delete = models.SET_NULL)
+    timestamp = models.DateTimeField(auto_now_add=True)
 
 
 
