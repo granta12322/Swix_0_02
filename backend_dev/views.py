@@ -55,21 +55,37 @@ class EventViewSet(viewsets.ModelViewSet):
 
     @action(detail = True, methods = ['post','get'])
     def generate_tickets(self,request, pk):
-        print("Generating Tickets")
-        print("Ticket number:")
-        ticket_number = int(request.query_params.get('ticket_number'))
 
-        #print(request.__dict__)
+        ticket_number = int(request.query_params.get('ticket_number'))
         event = get_object_or_404(self.queryset, pk = pk)
         
-
-        print("Serializer valid, looping")
+        # ! Must validate ticket number does not excede capacity
 
         for i in range(ticket_number):
-            print("Ticket Saved", i)
             Ticket(event = event, owner = event.organiser).save()
 
         return Response(status=200)
+
+    @action(detail = True, methods = ['Post'])
+    def purchase_ticket(self,request, pk):
+        event = get_object_or_404(self.queryset, pk = pk)
+        type = request.ticket_type
+
+        available_tickets = Ticket.objects.filter( 
+                                                event = event
+                                                , type = type
+                                                , owner = event.organiser
+                                                , is_for_sale = True)
+        
+        if len(available_tickets) == 0:
+            return Response(status = 404)# ! Throw a response when no tickets available
+        
+        ticket = available_tickets[0]
+
+
+        #if check_on_sale() == False:
+        #    pass
+
 
 
 
