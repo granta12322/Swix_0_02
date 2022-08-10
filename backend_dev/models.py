@@ -31,9 +31,9 @@ class TransactionManager:
 
 
 class Transaction(models.Model):
-    buyer = models.ForeignKey(to = "users.User",related_name = "transaction_sales", on_delete = models.SET_NULL) # !!! Transaction isn't deleted when 
-    seller = models.ForeignKey(to = "users.User",related_name = "transaction_purchases", on_delete = models.SET_NULL) # !!! Transaction isn't deleted when 
-    ticket = models.ForeignKey(to = "Ticket", on_delete = models.SET_NULL)
+    buyer = models.ForeignKey(to = "users.User",related_name = "transaction_sales", on_delete = models.PROTECT) # !!! Transaction isn't deleted when 
+    seller = models.ForeignKey(to = "users.User",related_name = "transaction_purchases", on_delete = models.PROTECT) # !!! Transaction isn't deleted when a user deletes account
+    ticket = models.ForeignKey(to = "Ticket", on_delete = models.PROTECT)
     timestamp = models.DateTimeField(auto_now_add=True)
 
 
