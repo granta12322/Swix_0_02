@@ -34,14 +34,11 @@ class Common(Configuration):
         'django.contrib.messages',
         'whitenoise.runserver_nostatic',
         'django.contrib.staticfiles',
-
         'django_extensions',
         'debug_toolbar',
-
         'rest_framework',
-        
+        'corsheaders',
         'backend_dev',
-
         'Rest_Test.users'
     ]
 
@@ -57,6 +54,10 @@ class Common(Configuration):
     ]
 
     ROOT_URLCONF = 'Rest_Test.urls'
+
+    CORS_ORIGIN_WHITELIST = [
+    'http://localhost:3000',
+    ]
 
     TEMPLATES = [
         {
